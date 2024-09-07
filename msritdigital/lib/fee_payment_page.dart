@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+mport 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -7,7 +8,6 @@ void main() {
       primarySwatch: Colors.blue,
     ),
     home: FeePaymentPage(title: 'College Fee'),
-    
   ));
 }
 
@@ -21,6 +21,15 @@ class FeePaymentPage extends StatefulWidget {
 }
 
 class _FeePaymentPageState extends State<FeePaymentPage> {
+  Future<void> _launchURL() async {
+    const url = 'https://erp.eshiksa.net/esh/index.php?plugin=Login&action=index&pb=bob';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,7 +88,6 @@ class _FeePaymentPageState extends State<FeePaymentPage> {
                         color: Colors.black, // Ensure text is visible
                       ),
                     ),
-                  
                     SizedBox(height: 32.0),
                     Text(
                       'Contact Us:',
@@ -171,7 +179,7 @@ class _FeePaymentPageState extends State<FeePaymentPage> {
                           ),
                           SizedBox(height: 16.0),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: _launchURL,
                             child: Text('Pay ₹ 2,81,316.00'),
                           ),
                         ],
